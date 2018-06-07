@@ -10,7 +10,7 @@ jobs:
           key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: clone Pages
-          command: git clone https://github.com/wh1tecat-nya/wh1tecat-nya.github.io.gits dist && cd dist && ls -a | grep -v -E '.git' | xargs rm -r && cd ..
+          command: cd .. && git clone https://github.com/wh1tecat-nya/wh1tecat-nya.github.io.git dist && cd dist && git branch && ls | grep -v -E '^\.git$' | xargs rm -r && cd ../workspace
       - run:
           name: Install dependencies package
           command: yarn
@@ -27,6 +27,12 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "5d:b1:8a:84:9a:b9:bb:a5:64:74:5c:4e:0f:0e:cc:71"
+      - run:
+         name: git config
+         command: git config --global user.name "wh1tecat" && git config --global user.email "whitequeen0@gmail.com"
+      - run:
+          name: git commit
+          command: cp -R ./dist ../dist && cd ../dist && git add . && git commit -am "update pages"
       - deploy:
-        name: Deploy
-        command: cd dist && git add . && git commit -am "update pages" && git push origin master
+          name: Deploy
+          command: git push origin master
