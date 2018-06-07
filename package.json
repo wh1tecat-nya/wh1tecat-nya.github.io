@@ -1,0 +1,23 @@
+{
+  "name": "my_portfolio",
+  "version": "0.0.1",
+  "description": "my portforlio site build system for github pages",
+  "scripts": {
+    "start": "nuxt",
+    "build": "nuxt generate",
+    "deploy": "push-dir "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wh1tecat-nya/my_portfolio.git"
+  },
+  "author": "wh1tecat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wh1tecat-nya/my_portfolio/issues"
+  },
+  "homepage": "https://github.com/wh1tecat-nya/my_portfolio#readme",
+  "dependencies": {
+    "nuxt": "^1.4.1"
+  }
+}

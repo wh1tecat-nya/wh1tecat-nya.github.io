@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/workspace
+    docker:
+      - image: circleci/node:8.11.2
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: clone Pages
+          command: cd .. && ls -al && git clone https://github.com/wh1tecat-nya/wh1tecat-nya.github.io.git dist && cd dist && git branch && ls | grep -v -E '^\.git$' | xargs rm -r && cd ../workspace && ls -al
+      - run:
+          name: Install dependencies package
+          command: yarn
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Check dist
+          command: ls -la dist
+      - save_cache: # 追加
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/workspace/node_modules
+      - add_ssh_keys:
+          fingerprints:
+            - "5d:b1:8a:84:9a:b9:bb:a5:64:74:5c:4e:0f:0e:cc:71"
+      - run:
+         name: git config
+         command: git config --global user.name "wh1tecat" && git config --global user.email "whitequeen0@gmail.com"
+      - run:
+          name: git commit and deploy
+          command: ls dist && cp -pR ./dist/* ../dist/ && cd ../dist && ls -al && git add . && git commit -am "update pages" && git push origin master
