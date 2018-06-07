@@ -1,0 +1,23 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/repo
+    docker:
+      - image: circleci/node:8.11.2
+    steps:
+      - checkout
+      - restore_cache:
+          keys: yarn-{{ .branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies package
+          command: yarn
+      - run:
+          name: Build
+          command: yarn build
+      - run:
+          name: Check dist
+          command: ls -la dist
+      - save_cache: # 追加
+          key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/workspace/node_modules
