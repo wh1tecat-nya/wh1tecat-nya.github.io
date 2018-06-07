@@ -9,6 +9,9 @@ jobs:
       - restore_cache:
           key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
+          name: clone Pages
+          command: git clone https://github.com/wh1tecat-nya/wh1tecat-nya.github.io.gits dist && cd dist && ls -a | grep -v -E '.git' | xargs rm -r && cd ..
+      - run:
           name: Install dependencies package
           command: yarn
       - run:
@@ -21,3 +24,9 @@ jobs:
           key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/workspace/node_modules
+      - add_ssh_keys:
+          fingerprints:
+            - "5d:b1:8a:84:9a:b9:bb:a5:64:74:5c:4e:0f:0e:cc:71"
+      - deploy:
+        name: Deploy
+        command: cd dist && git add . && git commit -am "update pages" && git push origin master

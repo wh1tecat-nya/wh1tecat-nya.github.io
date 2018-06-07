@@ -4,7 +4,8 @@
   "description": "my portforlio site build system for github pages",
   "scripts": {
     "start": "nuxt",
-    "build": "nuxt generate"
+    "build": "nuxt generate",
+    "deploy": "push-dir "
   },
   "repository": {
     "type": "git",
