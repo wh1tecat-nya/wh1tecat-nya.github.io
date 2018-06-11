@@ -1,4 +1,3 @@
-./pages/index.vue
 <template>
     <h1>Hello {{ name }}!</h1>
 </template>
@@ -6,7 +5,7 @@
 <script>
     export default {
         data: () => {
-            return {name: 'world'}
+            return {name: '世界'}
         }
     }
 </script>

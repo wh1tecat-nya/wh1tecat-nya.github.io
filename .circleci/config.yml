@@ -4,6 +4,9 @@ jobs:
     working_directory: ~/workspace
     docker:
       - image: circleci/node:8.11.2
+    branches:
+      only:
+        - develop
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +23,7 @@ jobs:
       - run:
           name: Check dist
           command: ls -la dist
-      - save_cache: # 追加
+      - save_cache:
           key: yarn-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/workspace/node_modules
