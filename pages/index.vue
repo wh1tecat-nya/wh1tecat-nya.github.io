@@ -1,11 +1,14 @@
 <template>
-    <h1>Hello {{ name }}!</h1>
+	<div>
+		hello {{name}}
+	</div>
 </template>
 
 <script>
-    export default {
-        data: () => {
-            return {name: '世界'}
-        }
-    }
+	export default {
+		name: "W3LC0M3",
+		data: () => {
+			return {name: 'world'}
+		}
+	}
 </script>
